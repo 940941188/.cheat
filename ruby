@@ -17,9 +17,6 @@ rescue Exception => exception
  exception
  exception.backtrace
 
-ssh deployer@yuelemon.com
-ssh root@suncityhrm.tech
-
 docker exec -it suncity_hrm_backend bash
 
 RAILS_ENV=docker rake migrate_data:load_predefined
