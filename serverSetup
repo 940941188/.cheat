@@ -1,0 +1,33 @@
+http://www.ruanyifeng.com/blog/2014/03/server_setup.html
+
+#登录远程主机
+ssh -p 29220 root@23.106.157.159
+
+#修改root用户的密码
+passwd
+
+#添加一个用户组
+addgroup admin
+
+#添加一个新用户（假定为joker）ps: 参数d指定用户的主目录，参数s指定用户的shell，参数m表示如果该目录不存在，则创建该目录。
+useradd -d /home/joker -s /bin/bash -m joker
+
+#设置新用户的密码
+passwd joker
+
+#将新用户添加到用户组
+usermod -a -G admin bill
+
+#为新用户设定sudo权限 (NOPASSWD表示，切换sudo的时候，不需要输入密码)
+visudo
+
+root    ALL=(ALL:ALL) ALL
+joker   ALL=(ALL) NOPASSWD: ALL
+或者
+root    ALL=(ALL:ALL) ALL
+joker   ALL=(ALL:ALL) ALL
+
+#重新登录
+ssh -p 29220 joker@23.106.157.159
+
+
