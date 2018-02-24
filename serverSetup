@@ -16,7 +16,7 @@ useradd -d /home/joker -s /bin/bash -m joker
 passwd joker
 
 #将新用户添加到用户组
-usermod -a -G admin bill
+usermod -a -G admin joker
 
 #为新用户设定sudo权限 (NOPASSWD表示，切换sudo的时候，不需要输入密码)
 visudo
@@ -30,4 +30,46 @@ joker   ALL=(ALL:ALL) ALL
 #重新登录
 ssh -p 29220 joker@23.106.157.159
 
+#将公钥上传到远程连接的主机
+ssh-copy-id user@host
 
+#/etc/ssh/sshd_config
+##SSH服务器监听的选项  
+#修改监听的端口，可以增加入侵者探测系统是否运行了 sshd守护进程的难度。  
+Port 30003   
+#使用SSH V2协议  
+Protocol 2  
+#监听的地址为所有地址  
+#ListenAdderss 0.0.0.0  
+ListenAdderss 192.168.5.0/24
+#禁止DNS反向解析  
+UseDNS no  
+# 密钥长度
+ServerKeyBits 2048
+   
+##用户登录控制选项  
+#是否允许root用户登录，如果允许用户使用root用户登录，那么黑客们可以针对root用户尝试暴力破解密码，给系统安全带来风险。  
+PermitRootLogin no  
+#是否允许空密码用户登录，允许使用空密码系统就像不设防的堡垒，任何安全措施都是一句空话。 
+PermitEmptyPasswords no  
+#登录验证时间(2分钟)  
+LoginGraceTime 2m  
+#最大重试次数  
+MaxAuthTries 6  
+#只允许user用户登录，与DenyUsers选项相反  
+AllowUsers user1 user2  
+# 禁止指定的 用户或组
+DenyUsers apache
+ 
+#注：Allow 和 Deny 可以组合使用，它们的处理顺序是：DenyUsers, AllowUsers, DenyGroups, AllowGroups
+ 
+##登录验证方式  
+#关闭密码验证  
+PasswordAuthentication no  
+ 
+#以下三行没什么要改的，把默认的#注释去掉就行了
+RSAAuthentication yes
+#启用秘钥验证  
+PubkeyAuthentication yes  
+#指定公钥数据库文件  
+AuthorsizedKeysFile .ssh/authorized_keys
