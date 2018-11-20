@@ -4,3 +4,5 @@ ruby
 serverSetup   #配置服务器
 vi
 kubectl
+
+vscodeHotKey #vscode 快捷键
