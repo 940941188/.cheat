@@ -1,0 +1,8 @@
+1. kubectl get pods [--watch]
+2. kubectl -exec -it XXX --bash
+3. kubectl get deployments
+4. kubectl describe pod XXX
+5. kubectl describe deployment
+
+#部署
+6. python main.py force_update deployment elephantbi-frontend-deployment default
